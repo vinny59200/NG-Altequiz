@@ -1,66 +1,47 @@
-<span>{{question.question}}</span><br>
+<div class="parent">
+<span>{{question.question}}</span>
 <table style="width:100%">
-    <tr>
+    <tr [hidden]="isAnswerABtnDisabled">
         <td>
-            <button id="answerABtn" value="{{answerA}}" [hidden]="isAnswerABtnDisabled" (click)="pushAbtn()">A</button>
+            <button class="button" id="answerABtn" [hidden]="isAnswerABtnDisabled" (click)="pushAbtn()">A</button>
         </td>
         <td><span [hidden]="isAnswerABtnDisabled">{{answerATextView}}</span></td>
     </tr>
-    <tr>
+    <tr [hidden]="isAnswerBBtnDisabled">
         <td>
-            <button id="answerBBtn" value="{{answerB}}" [hidden]="isAnswerBBtnDisabled" (click)="pushBbtn()">B</button>
+            <button class="button" id="answerBBtn" [hidden]="isAnswerBBtnDisabled" (click)="pushBbtn()">B</button>
         </td>
         <td><span [hidden]="isAnswerBBtnDisabled">{{answerBTextView}}</span></td>
     </tr>
     <tr [hidden]="isAnswerCBtnDisabled">
         <td>
-            <button id="answerCBtn" value="{{answerC}}" [hidden]="isAnswerCBtnDisabled" (click)="pushCbtn()">C</button>
+            <button class="button" id="answerCBtn" [hidden]="isAnswerCBtnDisabled" (click)="pushCbtn()">C</button>
         </td>
         <td><span [hidden]="isAnswerCBtnDisabled">{{answerCTextView}}</span></td>
     </tr>
     <tr [hidden]="isAnswerDBtnDisabled">
         <td>
-            <button id="answerDBtn" value="{{answerD}}" [hidden]="isAnswerDBtnDisabled" (click)="pushDbtn()">D</button>
+            <button class="button" id="answerDBtn" [hidden]="isAnswerDBtnDisabled" (click)="pushDbtn()">D</button>
         </td>
         <td><span [hidden]="isAnswerDBtnDisabled">{{answerDTextView}}</span></td>
     </tr>
     <tr [hidden]="isAnswerEBtnDisabled">
         <td>
-            <button id="answerEBtn" value="{{answerE}}" [hidden]="isAnswerEBtnDisabled" (click)="pushEbtn()">E</button>
+            <button class="button" id="answerEBtn" [hidden]="isAnswerEBtnDisabled" (click)="pushEbtn()">E</button>
         </td>
         <td><span [hidden]="isAnswerEBtnDisabled">{{answerETextView}}</span></td>
     </tr>
     <tr [hidden]="isAnswerFBtnDisabled">
         <td>
-            <button id="answerFBtn" value="{{answerF}}" [hidden]="isAnswerFBtnDisabled" (click)="pushFbtn()">F</button>
+            <button class="button" id="answerFBtn" [hidden]="isAnswerFBtnDisabled" (click)="pushFbtn()">F</button>
         </td>
         <td><span [hidden]="isAnswerFBtnDisabled">{{answerFTextView}}</span></td>
     </tr>
 </table>
-<button id="blogFBtn" [hidden]="isBlogBtnDisabled" (click)="pushBlogbtn()">Replay</button><br><br>
-<button id="replayBtn" [hidden]="isReplayBtnDisabled" (click)="pushReplaybtn()">Blog</button><br><br>
+<br>
+<button class="button" style="width: 25%;" id="blogFBtn" *ngIf="!isBlogBtnDisabled" (click)="pushBlogbtn()">Replay</button><br><br>
+<button class="button" style="width: 25%;" id="replayBtn" *ngIf="!isReplayBtnDisabled" (click)="pushReplaybtn()">Blog</button><br>
 
 
 <span [hidden]="isTipTextViewDisabled">{{tipTextView}}</span>
-
-<!-- <label>doPost:</label><br>
-<br>
-<span>{{post}}</span>
-<br>
-
-
-<label>getFirst:</label><br>
-<br>
-<span>{{getfirst}}</span>
-<br>
-
-<label>getQuestion:</label><br>
-<br>
-<span>{{getquestion}}</span>
-<br>
-
-
-<label>Decile:</label><br>
-<br>
-<span>{{getdecile}}</span>
-<br> -->
+</div>

@@ -39,19 +39,9 @@ export class QuestionComponent implements OnInit {
   isReplayBtnDisabled: boolean = true;
   isTipTextViewDisabled: boolean = false;
 
-  getdecile: number = 0;
-  post: string = "";
-  getfirst: string = "";
-  getquestion: string = "";
-
   constructor(private serQuestion: QuestionService) { }
 
-
   ngOnInit(): void {
-    // this.getDecile();
-    // this.getFirst();
-    //this.getQuestion();
-    //this.doPost();
     this.launchTaskWithAnswer("BLANK_NOT_PROCESSED");
   }
 
@@ -65,22 +55,16 @@ export class QuestionComponent implements OnInit {
     } else {
       this.getQuestion(userAnswer, isFirst, json);
     }
-    // this.question = new Question(json);
-    // console.log("898 q:"+JSON.stringify(this.question))
-    // if (userAnswer !== "BLANK_NOT_PROCESSED")this.nextId=this.question.id;
-    // console.log("678 nextid:"+this.nextId);
   }
 
   private afterGetQuestion(isFirst: boolean, json: any) {
-    console.log("345" + isFirst)
-    // if (!isFirst) {
     this.serQuestion.getQuestionJSON(json).subscribe({
       next: data => {
         console.log("414:" + JSON.stringify(data));
         json = data;
         this.isAnswerABtnDisabled = false;
         this.isAnswerBBtnDisabled = false;
-        if ((!this.isAnswerAllGood && this.questionStack.length > 9) || this.questionStack.length > 24) {
+        if ((!this.isAnswerAllGood && this.questionStack.length > 1) || this.questionStack.length > 24) {
           console.log("665 over")
           this.handleDisplayWhenOver();
           this.launchDecileTask(this.question.id.toString());
@@ -120,6 +104,8 @@ export class QuestionComponent implements OnInit {
       var decile = this.calculateScore(data);
       console.log("090:" + decile)
       this.question.question = `Vous êtes meilleur(e) que ${decile}% des joueurs.`;
+      this.questionStack=[];
+      this.nextId=0;
     });
 
   }
@@ -158,30 +144,6 @@ export class QuestionComponent implements OnInit {
     }
   }
 
-
-  // doPost(): void {
-  //   console.log('post')
-  //   this.serQuestion.getQuestionJSON(this.test).subscribe({
-  //     next: data => {
-  //       console.log("343" + JSON.stringify(data));
-  //       this.post = JSON.stringify(data);
-  //     },
-  //     error: error => {
-  //       console.error('There was an error with URL_POST!', error);
-  //     }
-  //   })
-
-  // }
-
-  // getDecile(): void {
-  //   console.log('decile')
-  //   this.serQuestion.getDecile('14').subscribe((data: any) => {
-  //     console.log(data);
-  //     this.getdecile = data;
-  //   });
-  // }
-
-
   pushAbtn(): void {
     this.launchTaskWithAnswer("A");
   }
@@ -200,11 +162,11 @@ export class QuestionComponent implements OnInit {
   pushFbtn(): void {
     this.launchTaskWithAnswer("F");
   }
-  pushBlogbtn(): void {
-    //5678
-  }
   pushReplaybtn(): void {
-    //5678
+    window.open("https://worldcaretriviaapp.mystrikingly.com", "_blank");
+  }
+  pushBlogbtn(): void {
+    this.launchTaskWithAnswer("BLANK_NOT_PROCESSED");
   }
 
   disbaleButtons() {
@@ -214,6 +176,8 @@ export class QuestionComponent implements OnInit {
     this.isAnswerDBtnDisabled = true;
     this.isAnswerEBtnDisabled = true;
     this.isAnswerFBtnDisabled = true;
+    this.isBlogBtnDisabled=true;
+    this.isReplayBtnDisabled=true;
   }
 
   handleDisplayWhenOver() {
