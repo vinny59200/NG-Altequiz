@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { from } from 'rxjs';
 import { Observable } from 'rxjs';
+import { Question } from '../models/question';
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +17,9 @@ export class QuestionService {
 
   constructor(private http: HttpClient) { }
 
-  getQuestionJSON(json: string) {
-      this.http.post<any>(this.URL_POST, json).subscribe({
-        next: data => {
-          return data;
-        },
-        error: error => {
-          console.error('There was an error with URL_POST!', error);
-        }
-      })
+  getQuestionJSON(json: any) {
+    console.log("in getQuestionJSON:" + JSON.stringify(json))
+    return this.http.post<any>(this.URL_POST, json);
   }
 
   subGetFirstQuestionJSON() {

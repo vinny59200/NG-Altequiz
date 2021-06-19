@@ -1,18 +1,42 @@
-  
+<span>{{question.question}}</span><br>
+
+<button id="answerABtn" value="{{answerA}}" *ngIf="!isAnswerABtnDisabled" (click)="pushAbtn()">A</button><span
+    *ngIf="!isAnswerABtnDisabled">{{answerATextView}}</span><br><br>
+<button id="answerBBtn" value="{{answerB}}" *ngIf="!isAnswerBBtnDisabled" (click)="pushBbtn()">B</button><span
+    *ngIf="!isAnswerBBtnDisabled">{{answerBTextView}}</span><br><br>
+<button id="answerCBtn" value="{{answerC}}" *ngIf="!isAnswerCBtnDisabled" (click)="pushCbtn()">C</button><span
+    *ngIf="!isAnswerCBtnDisabled">{{answerCTextView}}</span><br><br>
+<button id="answerDBtn" value="{{answerD}}" *ngIf="!isAnswerDBtnDisabled" (click)="pushDbtn()">D</button><span
+    *ngIf="!isAnswerDBtnDisabled">{{answerDTextView}}</span><br><br>
+<button id="answerEBtn" value="{{answerE}}" *ngIf="!isAnswerEBtnDisabled" (click)="pushEbtn()">E</button><span
+    *ngIf="!isAnswerEBtnDisabled">{{answerETextView}}</span><br><br>
+<button id="answerFBtn" value="{{answerF}}" *ngIf="!isAnswerFBtnDisabled" (click)="pushFbtn()">F</button><span
+    *ngIf="!isAnswerFBtnDisabled">{{answerFTextView}}</span><br><br>
+
+<button id="blogFBtn" *ngIf="!isBlogBtnDisabled" (click)="pushBlogbtn()">Replay</button><br><br>
+<button id="replayBtn" *ngIf="!isReplayBtnDisabled" (click)="pushReplaybtn()">Blog</button><br><br>
+
+
+<span *ngIf="!isTipTextViewDisabled">{{tipTextView}}</span>
+
+<!-- <label>doPost:</label><br>
+<br>
+<span>{{post}}</span>
+<br>
+
+
 <label>getFirst:</label><br>
 <br>
 <span>{{getfirst}}</span>
 <br>
-  
+
 <label>getQuestion:</label><br>
 <br>
 <span>{{getquestion}}</span>
 <br>
 
-  
+
 <label>Decile:</label><br>
 <br>
 <span>{{getdecile}}</span>
-<br>
-
-
+<br> -->
