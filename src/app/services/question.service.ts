@@ -18,7 +18,7 @@ export class QuestionService {
   constructor(private http: HttpClient) { }
 
   getQuestionJSON(json: any) {
-    console.log("in getQuestionJSON:" + JSON.stringify(json))
+    //console.log("in getQuestionJSON:" + JSON.stringify(json))
     return this.http.post<any>(this.URL_POST, json);
   }
 

@@ -34,6 +34,15 @@ table {
     align-items: center;
   }
 
+  .star {
+    width: 50%;
+    
+  flex-direction: row ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
 
   /* Header/Logo Title */
 .header {

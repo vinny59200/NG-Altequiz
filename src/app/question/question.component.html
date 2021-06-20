@@ -48,8 +48,11 @@
         <ngb-progressbar type="success" [max]="100" [value]="progress" style="width:70%" 
             >
             <span><i class="val">Chargement</i></span>
-        </ngb-progressbar>
-    
+        </ngb-progressbar><br><br>
+        <div class="star">
+        <div *ngFor='let star of stars ;let i = index' >
+            <img src='/assets/iconfinder_1930255_galaxy_green_star_icon_64px.png' />
+        </div> </div>
     <span [hidden]="isTipTextViewDisabled">{{tipTextView}}</span>
 
 </div>

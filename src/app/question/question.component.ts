@@ -14,6 +14,7 @@ export class QuestionComponent implements OnInit {
   isAnswerAllGood: boolean = true;
   nextId: number = 0;
   progress: number = 0;
+  stars: number[] = [];
 
   questionTextView: string = '';
   tipTextView: string = '';
@@ -47,7 +48,7 @@ export class QuestionComponent implements OnInit {
   }
 
   launchTaskWithAnswer(answer: string) {
-    this.progress=0;
+    this.progress = 0;
     var userAnswer: string = answer;
     this.disbaleButtons();
     this.progress = 20;
@@ -60,11 +61,11 @@ export class QuestionComponent implements OnInit {
     }
   }
 
-  private afterGetQuestion(isFirst: boolean, json: any) {
+  private afterGetQuestion(idForStar: number, json: any) {
     this.progress = 80;
     this.serQuestion.getQuestionJSON(json).subscribe({
       next: data => {
-        console.log("414:" + JSON.stringify(data));
+        // console.log("414:" + JSON.stringify(data));
         json = data;
         this.progress = 100;
         this.isAnswerABtnDisabled = false;
@@ -74,7 +75,7 @@ export class QuestionComponent implements OnInit {
           this.handleDisplayWhenOver();
           this.launchDecileTask(this.question.id.toString());
         } else {
-          console.log("785 not over")
+          //console.log("785 not over")
           this.question = new Question(json);
           this.nextId = this.question.id;
           var answers: string[] = this.question.choices_content.split("###");
@@ -89,10 +90,14 @@ export class QuestionComponent implements OnInit {
           if (this.question.choices_count > 5)
             this.answerFTextView = answers[5];
           this.handleDisplayWhenNotOver();
+          this.serQuestion.getDecile(idForStar.toString()).subscribe((data: any) => {
+            this.stars = Array(10-parseInt(data)).fill(0,1,parseInt(data)).map((x,i)=>i);
+            console.log("871: stars="+(10-parseInt(data))+" for id:"+idForStar+" --decile=:"+data+"--")
+          });      
         }
         console.log("VV 700 quest Id:" + this.nextId + ", count quest:" + this.questionStack.length +
           ", perfect:" + this.isAnswerAllGood + " karma:" + this.question.karma);
-        console.log(json);
+       // console.log(json);
       },
       error: error => {
         console.error('There was an error with URL_POST!', error);
@@ -105,9 +110,9 @@ export class QuestionComponent implements OnInit {
   launchDecileTask(lastId: string) {
     var id: string = lastId;
     this.serQuestion.getDecile(id).subscribe((data: any) => {
-      console.log(data);
+      //console.log(data);
       var decile = this.calculateScore(data);
-      console.log("090:" + decile)
+      //console.log("090:" + decile)
       this.question.question = `Vous êtes meilleur(e) que ${decile}% des joueurs.`;
       this.questionStack = [];
       this.nextId = 0;
@@ -122,7 +127,7 @@ export class QuestionComponent implements OnInit {
   getFirst(json: any): void {
     console.log('first')
     this.serQuestion.subGetFirstQuestionJSON().subscribe((data: any) => {
-      console.log("465" + data)
+     // console.log("465" + data)
       this.progress = 40;
       this.nextId = parseInt(data);
       this.getQuestion("BLANK_NOT_PROCESSED", true, json);
@@ -130,16 +135,16 @@ export class QuestionComponent implements OnInit {
   }
 
   getQuestion(userAnswer: string, isFirst: boolean, json: any): void {
-    console.log('909:' + this.nextId)
+    //console.log('909:' + this.nextId)
     this.progress = 60;
     this.serQuestion.subGetQuestionJSON(this.nextId.toString()).subscribe((data: any) => {
-      console.log("776:" + JSON.stringify(data));
+      //console.log("776:" + JSON.stringify(data));
       var q: Question = new Question(data);
       this.isAnswerAllGood = this.isAnswerAllGoodCalculation(q.answer, userAnswer, this.isAnswerAllGood);
       q.answer = userAnswer;
       if (userAnswer !== "BLANK_NOT_PROCESSED") { this.questionStack.push(q); }
       json = q;
-      this.afterGetQuestion(isFirst, json);
+      this.afterGetQuestion(this.nextId, json);
     });
   }
 
@@ -213,7 +218,7 @@ export class QuestionComponent implements OnInit {
       this.isAnswerFBtnDisabled = true;
     } else if (this.question.choices_count === 5) {
       this.isAnswerFBtnDisabled = true;
-    } 
+    }
     this.isReplayBtnDisabled = true;
     this.isBlogBtnDisabled = true;
     this.isTipTextViewDisabled = false;
@@ -227,5 +232,4 @@ export class QuestionComponent implements OnInit {
     this.isAnswerEBtnDisabled = false;
     this.isAnswerFBtnDisabled = false;
   }
-
 }
