@@ -64,7 +64,7 @@ export class QuestionComponent implements OnInit {
         json = data;
         this.isAnswerABtnDisabled = false;
         this.isAnswerBBtnDisabled = false;
-        if ((!this.isAnswerAllGood && this.questionStack.length > 1) || this.questionStack.length > 24) {
+        if ((!this.isAnswerAllGood && this.questionStack.length > 9) || this.questionStack.length > 24) {
           console.log("665 over")
           this.handleDisplayWhenOver();
           this.launchDecileTask(this.question.id.toString());
@@ -104,8 +104,8 @@ export class QuestionComponent implements OnInit {
       var decile = this.calculateScore(data);
       console.log("090:" + decile)
       this.question.question = `Vous êtes meilleur(e) que ${decile}% des joueurs.`;
-      this.questionStack=[];
-      this.nextId=0;
+      this.questionStack = [];
+      this.nextId = 0;
     });
 
   }
@@ -176,8 +176,8 @@ export class QuestionComponent implements OnInit {
     this.isAnswerDBtnDisabled = true;
     this.isAnswerEBtnDisabled = true;
     this.isAnswerFBtnDisabled = true;
-    this.isBlogBtnDisabled=true;
-    this.isReplayBtnDisabled=true;
+    this.isBlogBtnDisabled = true;
+    this.isReplayBtnDisabled = true;
   }
 
   handleDisplayWhenOver() {
