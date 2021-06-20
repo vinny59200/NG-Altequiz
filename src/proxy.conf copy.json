@@ -1,0 +1,8 @@
+{
+    "/api/v1/*": {
+        "target": "http://129.213.40.35:5000",
+        "secure": false,
+        "logLevel": "debug"
+        
+    }
+}

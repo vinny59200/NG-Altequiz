@@ -15,6 +15,7 @@ export class QuestionComponent implements OnInit {
   nextId: number = 0;
   progress: number = 0;
   stars: number[] = [];
+  starScore: number = 5;
 
   questionTextView: string = '';
   tipTextView: string = '';
@@ -61,7 +62,7 @@ export class QuestionComponent implements OnInit {
     }
   }
 
-  private afterGetQuestion(idForStar: number, json: any) {
+  private afterGetQuestion(json: any) {
     this.progress = 80;
     this.serQuestion.getQuestionJSON(json).subscribe({
       next: data => {
@@ -70,10 +71,13 @@ export class QuestionComponent implements OnInit {
         this.progress = 100;
         this.isAnswerABtnDisabled = false;
         this.isAnswerBBtnDisabled = false;
-        if ((!this.isAnswerAllGood && this.questionStack.length > 9) || this.questionStack.length > 24) {
+        if ((!this.isAnswerAllGood && this.questionStack.length > 1) || this.questionStack.length > 24) {
           console.log("665 over")
           this.handleDisplayWhenOver();
-          this.launchDecileTask(this.question.id.toString());
+          var scoretmp:number=this.calculateStars()*10;
+          this.question.question = `Votre score est de ${scoretmp}%.`;
+          this.questionStack = [];
+          this.nextId = 0;
         } else {
           //console.log("785 not over")
           this.question = new Question(json);
@@ -93,7 +97,7 @@ export class QuestionComponent implements OnInit {
         }
         console.log("VV 700 quest Id:" + this.nextId + ", count quest:" + this.questionStack.length +
           ", perfect:" + this.isAnswerAllGood + " karma:" + this.question.karma);
-       // console.log(json);
+        // console.log(json);
       },
       error: error => {
         console.error('There was an error with URL_POST!', error);
@@ -103,27 +107,10 @@ export class QuestionComponent implements OnInit {
 
   }
 
-  launchDecileTask(lastId: string) {
-    var id: string = lastId;
-    this.serQuestion.getDecile(id).subscribe((data: any) => {
-      //console.log(data);
-      var decile = this.calculateScore(data);
-      //console.log("090:" + decile)
-      this.question.question = `Vous êtes meilleur(e) que ${decile}% des joueurs.`;
-      this.questionStack = [];
-      this.nextId = 0;
-    });
-
-  }
-
-  calculateScore(decile: string) {
-    return 100 - parseInt(decile) * 10;
-  }
-
   getFirst(json: any): void {
     console.log('first')
     this.serQuestion.subGetFirstQuestionJSON().subscribe((data: any) => {
-     // console.log("465" + data)
+      // console.log("465" + data)
       this.progress = 40;
       this.nextId = parseInt(data);
       this.getQuestion("BLANK_NOT_PROCESSED", true, json);
@@ -140,20 +127,30 @@ export class QuestionComponent implements OnInit {
       q.answer = userAnswer;
       if (userAnswer !== "BLANK_NOT_PROCESSED") { this.questionStack.push(q); }
       json = q;
-      
-    this.serQuestion.getDecile(this.nextId.toString()).subscribe((data: any) => {
-      this.stars = Array(10-parseInt(data)).fill(0,1,parseInt(data)).map((x,i)=>i);
-      console.log("871: stars="+(10-parseInt(data))+" for id:"+this.nextId.toString()+" --decile=:"+data+"--")
-    });   
-      this.afterGetQuestion(this.nextId, json);
+      this.stars = Array(this.calculateStars()).fill(0, 1, this.calculateStars()).map((x, i) => i);
+      this.afterGetQuestion(json);
     });
   }
 
+  private calculateStars(): number  {
+    var result=5;
+    if(this.starScore>9)result= 10;
+    else
+    result= this.starScore % 10;
+    console.log("578: stars="+result)
+    return result;
+  }
+
   isAnswerAllGoodCalculation(fromDB: string, fromUser: string, isAnswerAllGood: boolean): boolean {
-    console.log("921 answers:"+fromDB+" | "+fromUser+" (latter one being from user input)"+(fromDB.trim() === fromUser.trim()))
+    console.log("921 answers:" + fromDB + " | " + fromUser + " (latter one being from user input)" + (fromDB.trim() === fromUser.trim()))   
     if (fromUser === "BLANK_NOT_PROCESSED") {
       return true;
     } else {
+      if (fromDB.trim() === fromUser.trim()) {
+        this.starScore = this.starScore + 1;
+      } else {
+        this.starScore = this.starScore - 1;
+      }
       return isAnswerAllGood && fromDB.trim() === fromUser.trim();
     }
   }
