@@ -13,6 +13,7 @@ export class QuestionComponent implements OnInit {
   questionStack: Question[] = [];
   isAnswerAllGood: boolean = true;
   nextId: number = 0;
+  progress: number = 0;
 
   questionTextView: string = '';
   tipTextView: string = '';
@@ -46,8 +47,10 @@ export class QuestionComponent implements OnInit {
   }
 
   launchTaskWithAnswer(answer: string) {
+    this.progress=0;
     var userAnswer: string = answer;
     this.disbaleButtons();
+    this.progress = 20;
     var json: any;
     var isFirst: boolean = (answer === "BLANK_NOT_PROCESSED");
     if (isFirst) {
@@ -58,10 +61,12 @@ export class QuestionComponent implements OnInit {
   }
 
   private afterGetQuestion(isFirst: boolean, json: any) {
+    this.progress = 80;
     this.serQuestion.getQuestionJSON(json).subscribe({
       next: data => {
         console.log("414:" + JSON.stringify(data));
         json = data;
+        this.progress = 100;
         this.isAnswerABtnDisabled = false;
         this.isAnswerBBtnDisabled = false;
         if ((!this.isAnswerAllGood && this.questionStack.length > 9) || this.questionStack.length > 24) {
@@ -118,6 +123,7 @@ export class QuestionComponent implements OnInit {
     console.log('first')
     this.serQuestion.subGetFirstQuestionJSON().subscribe((data: any) => {
       console.log("465" + data)
+      this.progress = 40;
       this.nextId = parseInt(data);
       this.getQuestion("BLANK_NOT_PROCESSED", true, json);
     });
@@ -125,6 +131,7 @@ export class QuestionComponent implements OnInit {
 
   getQuestion(userAnswer: string, isFirst: boolean, json: any): void {
     console.log('909:' + this.nextId)
+    this.progress = 60;
     this.serQuestion.subGetQuestionJSON(this.nextId.toString()).subscribe((data: any) => {
       console.log("776:" + JSON.stringify(data));
       var q: Question = new Question(data);

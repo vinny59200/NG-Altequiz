@@ -1,47 +1,55 @@
 <div class="parent">
-<span class="header">{{question.question}}</span>
-<table style="width:100%">
-    <tr [hidden]="isAnswerABtnDisabled">
-        <td>
-            <button class="button" id="answerABtn" [hidden]="isAnswerABtnDisabled" (click)="pushAbtn()">A</button>
-        </td>
-        <td><span [hidden]="isAnswerABtnDisabled">{{answerATextView}}</span></td>
-    </tr>
-    <tr [hidden]="isAnswerBBtnDisabled">
-        <td>
-            <button class="button" id="answerBBtn" [hidden]="isAnswerBBtnDisabled" (click)="pushBbtn()">B</button>
-        </td>
-        <td><span [hidden]="isAnswerBBtnDisabled">{{answerBTextView}}</span></td>
-    </tr>
-    <tr [hidden]="isAnswerCBtnDisabled">
-        <td>
-            <button class="button" id="answerCBtn" [hidden]="isAnswerCBtnDisabled" (click)="pushCbtn()">C</button>
-        </td>
-        <td><span [hidden]="isAnswerCBtnDisabled">{{answerCTextView}}</span></td>
-    </tr>
-    <tr [hidden]="isAnswerDBtnDisabled">
-        <td>
-            <button class="button" id="answerDBtn" [hidden]="isAnswerDBtnDisabled" (click)="pushDbtn()">D</button>
-        </td>
-        <td><span [hidden]="isAnswerDBtnDisabled">{{answerDTextView}}</span></td>
-    </tr>
-    <tr [hidden]="isAnswerEBtnDisabled">
-        <td>
-            <button class="button" id="answerEBtn" [hidden]="isAnswerEBtnDisabled" (click)="pushEbtn()">E</button>
-        </td>
-        <td><span [hidden]="isAnswerEBtnDisabled">{{answerETextView}}</span></td>
-    </tr>
-    <tr [hidden]="isAnswerFBtnDisabled">
-        <td>
-            <button class="button" id="answerFBtn" [hidden]="isAnswerFBtnDisabled" (click)="pushFbtn()">F</button>
-        </td>
-        <td><span [hidden]="isAnswerFBtnDisabled">{{answerFTextView}}</span></td>
-    </tr>
-</table>
-<br>
-<button class="button" style="width: 25%;" id="blogFBtn" *ngIf="!isBlogBtnDisabled" (click)="pushBlogbtn()">Replay</button><br><br>
-<button class="button" style="width: 25%;" id="replayBtn" *ngIf="!isReplayBtnDisabled" (click)="pushReplaybtn()">Blog</button><br>
+    <span class="header">{{question.question}}</span>
+    <table style="width:100%">
+        <tr [hidden]="isAnswerABtnDisabled">
+            <td>
+                <button class="button" id="answerABtn" [hidden]="isAnswerABtnDisabled" (click)="pushAbtn()">A</button>
+            </td>
+            <td><span [hidden]="isAnswerABtnDisabled">{{answerATextView}}</span></td>
+        </tr>
+        <tr [hidden]="isAnswerBBtnDisabled">
+            <td>
+                <button class="button" id="answerBBtn" [hidden]="isAnswerBBtnDisabled" (click)="pushBbtn()">B</button>
+            </td>
+            <td><span [hidden]="isAnswerBBtnDisabled">{{answerBTextView}}</span></td>
+        </tr>
+        <tr [hidden]="isAnswerCBtnDisabled">
+            <td>
+                <button class="button" id="answerCBtn" [hidden]="isAnswerCBtnDisabled" (click)="pushCbtn()">C</button>
+            </td>
+            <td><span [hidden]="isAnswerCBtnDisabled">{{answerCTextView}}</span></td>
+        </tr>
+        <tr [hidden]="isAnswerDBtnDisabled">
+            <td>
+                <button class="button" id="answerDBtn" [hidden]="isAnswerDBtnDisabled" (click)="pushDbtn()">D</button>
+            </td>
+            <td><span [hidden]="isAnswerDBtnDisabled">{{answerDTextView}}</span></td>
+        </tr>
+        <tr [hidden]="isAnswerEBtnDisabled">
+            <td>
+                <button class="button" id="answerEBtn" [hidden]="isAnswerEBtnDisabled" (click)="pushEbtn()">E</button>
+            </td>
+            <td><span [hidden]="isAnswerEBtnDisabled">{{answerETextView}}</span></td>
+        </tr>
+        <tr [hidden]="isAnswerFBtnDisabled">
+            <td>
+                <button class="button" id="answerFBtn" [hidden]="isAnswerFBtnDisabled" (click)="pushFbtn()">F</button>
+            </td>
+            <td><span [hidden]="isAnswerFBtnDisabled">{{answerFTextView}}</span></td>
+        </tr>
+    </table>
+    <br>
+    <button class="button" style="width: 25%;" id="blogFBtn" *ngIf="!isBlogBtnDisabled"
+        (click)="pushBlogbtn()">Replay</button><br><br>
+    <button class="button" style="width: 25%;" id="replayBtn" *ngIf="!isReplayBtnDisabled"
+        (click)="pushReplaybtn()">Blog</button><br><br>
 
+    
+        <ngb-progressbar type="success" [max]="100" [value]="progress" style="width:70%" 
+            >
+            <span><i class="val">Chargement</i></span>
+        </ngb-progressbar>
+    
+    <span [hidden]="isTipTextViewDisabled">{{tipTextView}}</span>
 
-<span [hidden]="isTipTextViewDisabled">{{tipTextView}}</span>
 </div>
