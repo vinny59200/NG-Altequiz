@@ -212,11 +212,8 @@ export class QuestionComponent implements OnInit {
       this.isAnswerEBtnDisabled = true;
       this.isAnswerFBtnDisabled = true;
     } else if (this.question.choices_count === 5) {
-      this.isAnswerEBtnDisabled = true;
       this.isAnswerFBtnDisabled = true;
-    } else if (this.question.choices_count === 6) {
-      this.isAnswerFBtnDisabled = true;
-    }
+    } 
     this.isReplayBtnDisabled = true;
     this.isBlogBtnDisabled = true;
     this.isTipTextViewDisabled = false;
