@@ -90,10 +90,6 @@ export class QuestionComponent implements OnInit {
           if (this.question.choices_count > 5)
             this.answerFTextView = answers[5];
           this.handleDisplayWhenNotOver();
-          this.serQuestion.getDecile(idForStar.toString()).subscribe((data: any) => {
-            this.stars = Array(10-parseInt(data)).fill(0,1,parseInt(data)).map((x,i)=>i);
-            console.log("871: stars="+(10-parseInt(data))+" for id:"+idForStar+" --decile=:"+data+"--")
-          });      
         }
         console.log("VV 700 quest Id:" + this.nextId + ", count quest:" + this.questionStack.length +
           ", perfect:" + this.isAnswerAllGood + " karma:" + this.question.karma);
@@ -144,11 +140,17 @@ export class QuestionComponent implements OnInit {
       q.answer = userAnswer;
       if (userAnswer !== "BLANK_NOT_PROCESSED") { this.questionStack.push(q); }
       json = q;
+      
+    this.serQuestion.getDecile(this.nextId.toString()).subscribe((data: any) => {
+      this.stars = Array(10-parseInt(data)).fill(0,1,parseInt(data)).map((x,i)=>i);
+      console.log("871: stars="+(10-parseInt(data))+" for id:"+this.nextId.toString()+" --decile=:"+data+"--")
+    });   
       this.afterGetQuestion(this.nextId, json);
     });
   }
 
   isAnswerAllGoodCalculation(fromDB: string, fromUser: string, isAnswerAllGood: boolean): boolean {
+    console.log("921 answers:"+fromDB+" | "+fromUser+" (latter one being from user input)"+(fromDB.trim() === fromUser.trim()))
     if (fromUser === "BLANK_NOT_PROCESSED") {
       return true;
     } else {

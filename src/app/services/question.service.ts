@@ -18,7 +18,6 @@ export class QuestionService {
   constructor(private http: HttpClient) { }
 
   getQuestionJSON(json: any) {
-    //console.log("in getQuestionJSON:" + JSON.stringify(json))
     return this.http.post<any>(this.URL_POST, json);
   }
 
@@ -26,12 +25,13 @@ export class QuestionService {
     return this.http.get(this.FIRST_URL_GET);
   }
 
-  subGetQuestionJSON(nextId: string) {
-    return this.http.get(this.URL_GET + nextId);
+  subGetQuestionJSON(id: string) {
+    return this.http.get(this.URL_GET + id);
   }
 
-  getDecile(lastId: string) {
-    return this.http.get(this.DECILE_URL_GET + lastId);
+  getDecile(id: string) {
+    console.log("289 GET "+this.DECILE_URL_GET + id)
+    return this.http.get(this.DECILE_URL_GET + id);
   }
 
 }
