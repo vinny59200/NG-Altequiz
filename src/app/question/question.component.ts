@@ -71,11 +71,11 @@ export class QuestionComponent implements OnInit {
         this.progress = 100;
         this.isAnswerABtnDisabled = false;
         this.isAnswerBBtnDisabled = false;
-        if ((!this.isAnswerAllGood && this.questionStack.length > 1) || this.questionStack.length > 24) {
+        if ((!this.isAnswerAllGood && this.questionStack.length > 9) || this.questionStack.length > 24) {
           console.log("665 over")
           this.handleDisplayWhenOver();
-          var scoretmp:number=this.calculateStars()*10;
-          this.question.question = `Votre score est de ${scoretmp}%.`;
+          var scoretmp:number=this.starScore*10;
+          this.question.question = `Votre score est de ${scoretmp} points.`;
           this.questionStack = [];
           this.nextId = 0;
         } else {
@@ -133,10 +133,9 @@ export class QuestionComponent implements OnInit {
   }
 
   private calculateStars(): number  {
-    var result=5;
+    var result=this.starScore;
     if(this.starScore>9)result= 10;
-    else
-    result= this.starScore % 10;
+    else if(this.starScore<0)result=0;
     console.log("578: stars="+result)
     return result;
   }
