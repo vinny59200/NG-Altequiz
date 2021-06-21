@@ -111,9 +111,13 @@ export class QuestionComponent implements OnInit {
     console.log('first')
     this.serQuestion.subGetFirstQuestionJSON().subscribe((data: any) => {
       // console.log("465" + data)
-      this.progress = 40;
-      this.nextId = parseInt(data);
-      this.getQuestion("BLANK_NOT_PROCESSED", json);
+      var q: Question = new Question(data);
+      this.nextId = q.id;
+      this.isAnswerAllGood = true;
+      this.questionStack.push(q);
+      json = q;
+      this.stars = Array(this.calculateStars()).fill(0, 1, this.calculateStars()).map((x, i) => i);
+      this.afterGetQuestion(json);
     });
   }
 
@@ -125,7 +129,7 @@ export class QuestionComponent implements OnInit {
       var q: Question = new Question(data);
       this.isAnswerAllGood = this.isAnswerAllGoodCalculation(q.answer, userAnswer, this.isAnswerAllGood);
       q.answer = userAnswer;
-      if (userAnswer !== "BLANK_NOT_PROCESSED") { this.questionStack.push(q); }
+      this.questionStack.push(q);
       json = q;
       this.stars = Array(this.calculateStars()).fill(0, 1, this.calculateStars()).map((x, i) => i);
       this.afterGetQuestion(json);

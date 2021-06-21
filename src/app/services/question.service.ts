@@ -10,10 +10,9 @@ import { Question } from '../models/question';
 })
 export class QuestionService {
 
-  private FIRST_URL_GET = "/api/v1/first/";
+  private FIRST_URL_GET = "/api/v1/question/first/";
   private URL_GET = "/api/v1/question/";
-  private URL_POST = "/api/v1/send/";
-  private DECILE_URL_GET = "/api/v1/decile/";
+  private URL_POST = "/api/v1/question/next/";
 
   constructor(private http: HttpClient) { }
 
@@ -27,11 +26,6 @@ export class QuestionService {
 
   subGetQuestionJSON(id: string) {
     return this.http.get(this.URL_GET + id);
-  }
-
-  getDecile(id: string) {
-    console.log("289 GET "+this.DECILE_URL_GET + id)
-    return this.http.get(this.DECILE_URL_GET + id);
   }
 
 }
