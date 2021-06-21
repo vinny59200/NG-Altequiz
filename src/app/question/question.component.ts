@@ -58,7 +58,7 @@ export class QuestionComponent implements OnInit {
     if (isFirst) {
       this.getFirst(json);
     } else {
-      this.getQuestion(userAnswer, isFirst, json);
+      this.getQuestion(userAnswer, json);
     }
   }
 
@@ -113,11 +113,11 @@ export class QuestionComponent implements OnInit {
       // console.log("465" + data)
       this.progress = 40;
       this.nextId = parseInt(data);
-      this.getQuestion("BLANK_NOT_PROCESSED", true, json);
+      this.getQuestion("BLANK_NOT_PROCESSED", json);
     });
   }
 
-  getQuestion(userAnswer: string, isFirst: boolean, json: any): void {
+  getQuestion(userAnswer: string, json: any): void {
     //console.log('909:' + this.nextId)
     this.progress = 60;
     this.serQuestion.subGetQuestionJSON(this.nextId.toString()).subscribe((data: any) => {
@@ -142,6 +142,7 @@ export class QuestionComponent implements OnInit {
 
   isAnswerAllGoodCalculation(fromDB: string, fromUser: string, isAnswerAllGood: boolean): boolean {
     console.log("921 answers:" + fromDB + " | " + fromUser + " (latter one being from user input)" + (fromDB.trim() === fromUser.trim()))   
+    fromDB = this.handleMultipleAnswers(fromDB,fromUser);
     if (fromUser === "BLANK_NOT_PROCESSED") {
       return true;
     } else {
@@ -151,6 +152,15 @@ export class QuestionComponent implements OnInit {
         this.starScore = this.starScore - 1;
       }
       return isAnswerAllGood && fromDB.trim() === fromUser.trim();
+    }
+  }
+
+  handleMultipleAnswers(fromDB:string,fromUser:string):string{
+    var answers: string[]=fromDB.split("-");
+    if(answers.includes(fromUser)){
+      return fromUser;
+    } else{
+      return fromDB;
     }
   }
 
